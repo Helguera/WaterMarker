@@ -23,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.JToggleButton;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -40,7 +41,6 @@ public class Ventana extends javax.swing.JFrame {
     public Ventana() {
         initComponents();
         wm = new WaterMark();
-        jTextArea1.setEditable(false);
         SpinnerNumberModel model1 = new SpinnerNumberModel(0.7, 0.0, 1.0, 0.1);
         jSpinner2.setModel(model1);
         jSpinner1.setEditor(new JSpinner.DefaultEditor(jSpinner1));
@@ -76,8 +76,8 @@ public class Ventana extends javax.swing.JFrame {
         jToggleButton3 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
         jToggleButton5 = new javax.swing.JToggleButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("WaterMarker");
@@ -106,7 +106,7 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 140, 30));
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 140, 120));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 120, 120));
 
         jButton5.setText("Imagenes");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -167,11 +167,37 @@ public class Ventana extends javax.swing.JFrame {
 
         jSplitPane1.setLeftComponent(jPanel2);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTable1.setFont(new java.awt.Font("Dialog", 0, 13)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        jSplitPane1.setRightComponent(jScrollPane1);
+            },
+            new String [] {
+                "Imágenes"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setRowHeight(21);
+        jScrollPane2.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+        }
+
+        jSplitPane1.setRightComponent(jScrollPane2);
 
         jPanel1.add(jSplitPane1, java.awt.BorderLayout.CENTER);
 
@@ -201,7 +227,7 @@ public class Ventana extends javax.swing.JFrame {
             } else {
                 if (img.getWidth() < img.getHeight()) {
                     dimg = img.getScaledInstance(img.getWidth() / (img.getHeight() / jLabel1.getHeight()), jLabel1.getHeight(), Image.SCALE_SMOOTH);
-                }else{
+                } else {
                     dimg = img.getScaledInstance(jLabel1.getWidth(), jLabel1.getHeight(), Image.SCALE_SMOOTH);
                 }
             }
@@ -222,8 +248,12 @@ public class Ventana extends javax.swing.JFrame {
         chooser.setMultiSelectionEnabled(true);
         chooser.showOpenDialog(this);
         files = chooser.getSelectedFiles();
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0);
         for (int i = 0; i < files.length; i++) {
-            jTextArea1.setText(jTextArea1.getText() + '\n' + files[i].getAbsolutePath());
+            model.addRow(new Object[]{files[i].getAbsolutePath()});
+            model.setColumnIdentifiers(new Object[]{"Imágenes ("+files.length+")"});
+            //jTextArea1.setText(jTextArea1.getText() + '\n' + files[i].getAbsolutePath());
         }
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -302,11 +332,11 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSpinner jSpinner1;
     private javax.swing.JSpinner jSpinner2;
     private javax.swing.JSplitPane jSplitPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;

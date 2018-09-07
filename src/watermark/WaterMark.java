@@ -59,18 +59,18 @@ public class WaterMark {
         } else {
             if (position.equals("izqab")) {
                 centerX = 25;
-                centerY = image.getHeight() - size - 25;
+                centerY = image.getHeight() - height - 25;
             } else {
                 if (position.equals("derarr")) {
-                    centerX = image.getWidth() - size - 25;
+                    centerX = image.getWidth() - width - 25;
                     centerY = 25;
                 } else {
                     if (position.equals("derab")) {
-                        centerX = image.getWidth() - size - 25;
-                        centerY = image.getHeight() - size - 25;
+                        centerX = image.getWidth() - width - 25;
+                        centerY = image.getHeight() - height - 25;
                     } else {
-                        centerX = image.getWidth() / 2 - size / 2;
-                        centerY = image.getHeight() / 2 - size / 2;
+                        centerX = image.getWidth() / 2 - width / 2;
+                        centerY = image.getHeight() / 2 - height / 2;
                     }
                 }
             }
